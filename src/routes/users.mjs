@@ -4,6 +4,19 @@ const router = express.Router();
 import {users} from '../data/users.mjs';
 import {error} from '../utilties/error.mjs'
 
+const resolveIndexByUserID = (req,res,next)=>{
+  const {
+    body,
+    params: {id},
+  } = req;
+  const parsedId = parseInt(id);
+  if(isNaN(parsedId)) return res.sendstatus(400);
+  const findUserIndex = users.findIndex((user) => user.id === parsedId);
+  if (findUserIndex === -1) return res.sendStatus(404);
+  req.findUserIndex = findUserIndex;
+  next()
+}
+
 router
   .route("/")
   .get((req, res) => {
@@ -31,32 +44,18 @@ router
 
     router
       .route("/:id")
-      .get((req,res,next) => {
+      .get((req,res,) => {
         const user = users.find((u) => u.id == req.params.id);
         if(user) res.json(user);
         else(next)
       })
-      .patch((req,res) =>{
-      const {
-        body,
-        params: {id},
-      } = req;
-      const parsedId = parseInt(id);
-      if(isNaN(parsedId)) return res.sendstatus(400);
-      const findUserIndex = users.findIndex((user) => user.id === parsedId);
-      if (findUserIndex === -1) return res.sendStatus(404);
+      .patch(resolveIndexByUserID,(req,res) =>{
+      const { body, findUserIndex } = req;
       users[findUserIndex] = {...users[findUserIndex], ...body}
       return res.sendStatus(204)
     })
-    .delete((req,res,next)=>{
-      const {
-        body,
-        params: {id},
-      } = req;
-      const parsedId = parseInt(id);
-      if(isNaN(parsedId)) return res.sendstatus(400);
-      const findUserIndex = users.findIndex((user) => user.id === parsedId);
-      if (findUserIndex === -1) return res.sendStatus(404);
+    .delete( resolveIndexByUserID,(req,res,next)=>{
+      const { body,findUserIndex } = req;
       users[findUserIndex] = {...users[findUserIndex], ...body}
       users.splice(findUserIndex, 1)
       return res.sendStatus(200)
