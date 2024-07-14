@@ -44,19 +44,19 @@ router
 
     router
       .route("/:id")
-      .get((req,res,) => {
+      .get((req,res) => {
         const user = users.find((u) => u.id == req.params.id);
         if(user) res.json(user);
         else(next)
       })
       .patch(resolveIndexByUserID,(req,res) =>{
       const { body, findUserIndex } = req;
-      users[findUserIndex] = {...users[findUserIndex], ...body}
+      users[findUserIndex] = {...users[findUserIndex], ...body};
       return res.sendStatus(204)
     })
     .delete( resolveIndexByUserID,(req,res,next)=>{
       const { body,findUserIndex } = req;
-      users[findUserIndex] = {...users[findUserIndex], ...body}
+      users[findUserIndex] = {...users[findUserIndex], ...body};
       users.splice(findUserIndex, 1)
       return res.sendStatus(200)
     })
