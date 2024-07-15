@@ -26,14 +26,18 @@ app.get('/views',(req,res)=>{
       "Welcome to our premier audio engineering e-commerce platform, where cutting-edge technology meets exceptional sound quality. Discover a curated selection of the finest audio equipment, from state-of-the-art studio gear to top-tier instruments, all designed to elevate your sound. Whether you're a seasoned professional or an aspiring artist, our expertly crafted products and unparalleled customer support will help you create the perfect auditory experience <a href `studio.pug`> studio </a>",
       
   };
-  res.render("test",options)
+  res.render("signup",options)
 })
+app.get('/userhome', (req, res) => {
+  res.render('userhome')
+ ;
+});
 app.get('/studio', (req, res) => {
   res.render('studio', { title: 'Other Page', content: 'This is the other page.' });
 });
 app.get('/instruments', (req, res) => {
   res.send('Product 2 Page');
-  res.render('studio', { title: 'Other Page', content: 'This is the other page.' })
+
 });
 
 const PORT = process.env.PORT || 3000;
