@@ -1,10 +1,8 @@
 import express from 'express';
 const router = express.Router();
 import { query, validationResult, body, matchedData} from "express-validator";
-
 import {users} from '../data/users.mjs';
 import {error} from '../utilties/error.mjs'
-
 const resolveIndexByUserID = (req,res,next)=>{
   const {
     body,
@@ -17,7 +15,6 @@ const resolveIndexByUserID = (req,res,next)=>{
   req.findUserIndex = findUserIndex;
   next()
 }
-
 router
   .route("/")
   .get(query('filter')
@@ -70,8 +67,6 @@ router
       if (user) res.json(user);
       else next();
     });
-    
-
     router
       .route("/:id")
       .get((req,res) => {
