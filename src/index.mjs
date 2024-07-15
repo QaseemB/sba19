@@ -1,38 +1,41 @@
 import express from 'express';
 import {query } from "express-validator";
 import pug from "pug"
-import fs from "fs"
 const app = express();
 import {router as userrouter} from './routes/users.mjs'
 import {router as instrumentrouter} from './routes/instrument.mjs'
 import {router as studioeqrouter} from './routes/studioeq.mjs'
 import {error} from './utilties/error.mjs'
 import { studioeq } from './data/studioeq.mjs';
+import path from "path"
+import { fileURLToPath } from 'url';
 
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.json())
+app.use(express.static(path.join(__dirname, 'public')));
 app.set("views", "./src/views"); 
 app.set("view engine", "pug")
 
 app.get('/views',(req,res)=>{
   const options = {
-    title: 'Rendering Views with Express',
+    title: 'Audio Engineer E commerce ',
     content:
-      "Here, we've created a basic template engine using <code>app.engine()</code> \
-      and the <code>fs</code> module, then used <code>res.render</code> to \
-      render this page using custom content within the template.<br><br> \
-      Generally, you won't want to create your own view engines, \
-      but it important to understand how they work behind the scenes. \
-      For a look at some popular view engines, check out the documentation for \
-      <a href='https://pugjs.org/api/getting-started.html'>Pug</a>, \
-      <a href='https://www.npmjs.com/package/mustache'>Mustache</a>, or \
-      <a href='https://www.npmjs.com/package/ejs'>EJS</a>. \
-      More complete front-end libraries like React, Angular, and Vue \
-      also have Express integrations.",
+      "Welcome to our premier audio engineering e-commerce platform, where cutting-edge technology meets exceptional sound quality. Discover a curated selection of the finest audio equipment, from state-of-the-art studio gear to top-tier instruments, all designed to elevate your sound. Whether you're a seasoned professional or an aspiring artist, our expertly crafted products and unparalleled customer support will help you create the perfect auditory experience <a href `studio.pug`> studio </a>",
+      
   };
   res.render("test",options)
 })
+app.get('/studio', (req, res) => {
+  res.render('studio', { title: 'Other Page', content: 'This is the other page.' });
+});
+app.get('/instruments', (req, res) => {
+  res.send('Product 2 Page');
+  res.render('studio', { title: 'Other Page', content: 'This is the other page.' })
+});
 
-app.use(express.json())
 const PORT = process.env.PORT || 3000;
 const logTime = (req,res,next)=>{
   const time = new Date();

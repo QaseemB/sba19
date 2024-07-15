@@ -33,7 +33,8 @@ router
         return res.send(users.filter((user)=> user[filter].includes(value)));
       return res.json(users)
   })
-    .post([ 
+    .post(
+    [ 
     body(`username`)
     .notEmpty()
     .withMessage(`the username cant be empty my guy`)
@@ -41,6 +42,9 @@ router
     .withMessage(`username nedds to be 5-25 characters`)
     .isString()
     .withMessage(`cant use that username it must be a string bro`),
+    body('email')
+    .isEmail().withMessage('Invalid email format')
+    .normalizeEmail(),
      body('password')
      .isLength({min: 5, max: 30})
      .withMessage(`password nedds to be 5-30 characters`)]
@@ -50,9 +54,11 @@ router
 
       if(!result.isEmpty())
         return res.status(400).send({errors: result.array()});
+
       const data = matchedData(req)
       console.log(data);
-      const newuser = {id: users[users.length -1].id + 1, ...data}
+      const newuser = {id: users[users.length -1].id + 1, ...data
+      }
       users.push(newuser);
       return res.status(201).send(newuser)
     })

@@ -1,7 +1,24 @@
 doctype html
 html
   head
+    link(rel="stylesheet", href="/styles/main.css")
     title= title
-  body
-    h1= title
+  body(style="background-color: navy; color: white;")
+    h1(style="text-align: center")= title
     p!= content
+    .image-container
+      a(href="/studio")
+        img(src="/images/instrument.jpg", alt="studio Equipment page")
+      a(href="/instruments")
+        img(src="/images/studioequipment.jpg", alt="Instrument page")
+    form(action="/api/users", method="POST")
+      label(for="username") Username:
+      input(type="text", id="username", name="username", required)
+      br
+      label(for="email") Email:
+      input(type="email", id="email", name="email", required)
+      br
+      label(for="password") Password:
+      input(type="password", id="password", name="password", required)
+      br
+      button(type="submit") Submit
