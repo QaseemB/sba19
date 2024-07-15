@@ -1,5 +1,6 @@
 import express from 'express';
 const router = express.Router();
+import { query, validationResult, body, matchedData} from "express-validator";
 
 import {users} from '../data/users.mjs';
 import {error} from '../utilties/error.mjs'
@@ -19,13 +20,42 @@ const resolveIndexByUserID = (req,res,next)=>{
 
 router
   .route("/")
-  .get((req, res) => {
-    res.json(users);
+  .get(query('filter')
+  .isString()
+  .notEmpty()
+  .withMessage(`cant leave this empty my guy`)
+  .isLength({min: 3, max: 20})
+  .withMessage(`parameter must be at least 3-20 characters :-)`),
+  (req, res) => {
+    const result = validationResult(req)
+    console.log(result)
+    const {
+      query: {filter, value},
+    } = req
+    if (filter && value)
+        return res.send(users.filter((user)=> user[filter].includes(value)));
+      return res.json(users)
   })
-    .post((req,res) =>{
-      console.log(req.body);
-      const {body} = req;
-      const newuser = {id: users[users.length -1].id + 1, ...body}
+    .post([ 
+    body(`username`)
+    .notEmpty()
+    .withMessage(`the username cant be empty my guy`)
+    .isLength({min: 5, max: 25})
+    .withMessage(`username nedds to be 5-25 characters`)
+    .isString()
+    .withMessage(`cant use that username it must be a string bro`),
+     body('password')
+     .isLength({min: 5, max: 30})
+     .withMessage(`password nedds to be 5-30 characters`)]
+    ,(req,res) =>{
+      const result = validationResult(req);
+      console.log(result)
+
+      if(!result.isEmpty())
+        return res.status(400).send({errors: result.array()});
+      const data = matchedData(req)
+      console.log(data);
+      const newuser = {id: users[users.length -1].id + 1, ...data}
       users.push(newuser);
       return res.status(201).send(newuser)
     })
@@ -60,24 +90,6 @@ router
       users.splice(findUserIndex, 1)
       return res.sendStatus(200)
     })
-  // .post((req, res) => {
-  //   if (req.body.name && req.body.username && req.body.email) {
-  //     if (users.find((u) => u.username == req.body.username)) {
-  //       res.json({ error: "Username Already Taken" });
-  //       return;
-  //     }
-
-  //     const user = {
-  //       id: users[users.length - 1].id + 1,
-  //       name: req.body.name,
-  //       username: req.body.username,
-  //       email: req.body.email,
-  //     };
-
-  //     users.push(user);
-  //     res.json(users[users.length - 1]);
-  //   } else res.json({ error: "Insufficient Data" });
-  // });
 
 
 export {router}
