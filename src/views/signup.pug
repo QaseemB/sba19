@@ -3,6 +3,10 @@ html
   head
      link(rel="stylesheet", href="/styles/main.css")
      title= "Audiophiles Welcome"
+     style.
+      .container{
+        padding-top: 5%;
+      }
      script.
       function handleSubmit(event) {
         event.preventDefault();
@@ -35,19 +39,16 @@ html
   body(style="background-color: navy; color: white;")
     h1(style="text-align: center")= title
     p!= content
-    .image-container
-      a(href="/studio")
-        img(src="/images/instrument.jpg", alt="studio Equipment page")
-      a(href="/instruments")
-        img(src="/images/studioequipment.jpg", alt="Instrument page")
-    form(style="text-align: center",id="signupForm", onsubmit="handleSubmit(event)")
-      label(for="username") Username:
-      input(type="text", id="username", name="username", required)
-      br
-      label(for="email") Email:
-      input(type="email", id="email", name="email", required)
-      br
-      label(for="password") Password:
-      input(type="password", id="password", name="password", required)
-      br
-      button(type="submit") Submit
+    .container 
+      p Please sign up for to access our content.
+      form(style="text-align: center",id="signupForm", onsubmit="handleSubmit(event)")
+        label(for="username") Username:
+        input(type="text", id="username", name="username", required)
+        br
+        label(for="email") Email:
+        input(type="email", id="email", name="email", required)
+        br
+        label(for="password") Password:
+        input(type="password", id="password", name="password", required)
+        br
+        button(type="submit") Submit

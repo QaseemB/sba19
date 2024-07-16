@@ -34,8 +34,8 @@ app.get('/userhome', (req, res) => {
 app.get('/studio', (req, res) => {
   res.render('studio');
 });
-app.get('/instruments', (req, res) => {
-  res.send('Product 2 Page');
+app.get("/instruments", (req, res) => {
+  res.render("instruments");
 
 });
 
