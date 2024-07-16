@@ -11,12 +11,11 @@ import path from "path"
 import { fileURLToPath } from 'url';
 
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static("public"))
-console.log('Static files served from:', 'public')
+app.use(express.json())
+app.use(express.static(path.join(__dirname, 'public')));
 app.set("views", "./src/views"); 
 app.set("view engine", "pug")
 
@@ -61,4 +60,3 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
     console.log(`running on porterpotty ${PORT} `)
 });
-
