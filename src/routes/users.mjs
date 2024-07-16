@@ -11,7 +11,7 @@ const resolveIndexByUserID = (req,res,next)=>{
   const parsedId = parseInt(id);
   if(isNaN(parsedId)) return res.sendstatus(400);
   const findUserIndex = users.findIndex((user) => user.id === parsedId);
-  if (findUserIndex === -1) return res.sendStatus(404);
+  if (findUserIndex === -1) return next(error(404, 'User not found'));
   req.findUserIndex = findUserIndex;
   next()
 }
