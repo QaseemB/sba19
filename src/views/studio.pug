@@ -1,7 +1,28 @@
 doctype html
 html
   head
-    title= title
+    style.
+      .image-container {
+        display: flex;
+        justify-content: space-between;
+
+      }
+      .image-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    link(rel="stylesheet", href="/styles/main.css")
+    title= "Studio Equipment"
   body
-    h1= title
-    p!= "hello world"
+    h1(style="text-align: center")= "Studio Equipment"
+    p Welcome to our Studio Equipment page, where cutting-edge technology meets timeless vintage gear. 
+    p Explore our selection of state-of-the-art studio equipment designed to deliver unparalleled sound quality. 
+    p Rediscover the classics with our carefully curated vintage collection, offering the unique warmth and character only analog      equipment can provide.
+  .image-container
+    .image-item 
+      img(src="/images/la2acomp.jpg", alt="la2a compressor")
+      p $4,699.00 FREE delivery July 19 - 22. Details Or fastest delivery July 18 - 19. Details
+    .image-item 
+    img(src="/images/neve1073.jpg", alt="neve1073 preamp")
+    p click here to vist our instrument page.

@@ -32,7 +32,7 @@ app.get('/userhome', (req, res) => {
  ;
 });
 app.get('/studio', (req, res) => {
-  res.render('studio', { title: 'Other Page', content: 'This is the other page.' });
+  res.render('studio');
 });
 app.get('/instruments', (req, res) => {
   res.send('Product 2 Page');
