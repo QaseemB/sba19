@@ -18,11 +18,11 @@ const resolveIndexByUserID = (req,res,next)=>{
 router
   .route("/")
   .get(query('filter')
-  .isString()
-  .notEmpty()
-  .withMessage(`cant leave this empty my guy`)
-  .isLength({min: 3, max: 20})
-  .withMessage(`parameter must be at least 3-20 characters :-)`),
+    .isString()
+    .notEmpty()
+    .withMessage(`cant leave this empty my guy`)
+    .isLength({min: 3, max: 20})
+    .withMessage(`parameter must be at least 3-20 characters :-)`),
   (req, res) => {
     const result = validationResult(req)
     console.log(result)
@@ -35,29 +35,44 @@ router
   })
     .post(
     [ 
+
+    body('name')
+     .notEmpty()
+     .withMessage(`name cannot be empty`)
+     .isLength({min: 3, max: 25})
+     .withMessage('name needs to be bewteen 3-20')
+     .isString()
+     .withMessage('unable to use that name, it must be a string'),
+
     body(`username`)
-    .notEmpty()
-    .withMessage(`the username cant be empty my guy`)
-    .isLength({min: 5, max: 25})
-    .withMessage(`username nedds to be 5-25 characters`)
-    .isString()
-    .withMessage(`cant use that username it must be a string bro`),
+      .notEmpty()
+      .withMessage(`the username cant be empty my guy`)
+      .isLength({min: 5, max: 25})
+      .withMessage(`username nedds to be 5-25 characters`)
+      .isString()
+      .withMessage(`cant use that username it must be a string bro`),
+
     body('email')
-    .isEmail().withMessage('Invalid email format')
-    .normalizeEmail(),
+      .isEmail()
+      .withMessage('Invalid email format')
+      .normalizeEmail(),
+
      body('password')
-     .isLength({min: 5, max: 30})
-     .withMessage(`password nedds to be 5-30 characters`)]
-    ,(req,res) =>{
+      .isLength({min: 5, max: 30})
+      .withMessage(`password nedds to be 5-30 characters`),
+     
+    ],
+    (req,res) =>{
       const result = validationResult(req);
       console.log(result)
+      console.log('req body:',req.body)
 
       if(!result.isEmpty())
         return res.status(400).send({errors: result.array()});
 
       const data = matchedData(req)
       console.log(data);
-      const newuser = {id: users[users.length -1].id + 1, ...data
+      const newuser = {id: users[users.length -1].name + 1, ...data
       }
       users.push(newuser);
       return res.status(201).send(newuser)

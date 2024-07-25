@@ -11,6 +11,7 @@ html
       function handleSubmit(event) {
         event.preventDefault();
         const formData = {
+          name: document.getElementById('name').value,
           username: document.getElementById('username').value,
           email: document.getElementById('email').value,
           password: document.getElementById('password').value
@@ -42,6 +43,9 @@ html
     .container 
       p Please sign up for to access our content.
       form(style="text-align: center",id="signupForm", onsubmit="handleSubmit(event)")
+        label(for="name") Name:
+        input(type="text", id="name", name="name", required)
+        br
         label(for="username") Username:
         input(type="text", id="username", name="username", required)
         br
