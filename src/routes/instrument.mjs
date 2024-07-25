@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
-import {instrument} from "../data/instrument.mjs"
+import {instrumentTest} from "../data/instrument.mjs"
 import {error} from '../utilties/error.mjs'
 
 const resolveIndexbyInstID = (req,res,next)=>{
