@@ -45,11 +45,48 @@ const users =
       email: "barcalegend@gmail.com"
     },
     {
-      name: "ronaldo",
-      username: "bestofthebest",
-      password: "aspiringsoftwaredev",
-      email: "cr7@gmail.com"
-    }
+      name: "ben",
+      username: "detroitkid",
+      password: "yippemmkay",
+      email: "diablo@aol.com"
+    },
+    {
+      name: "wallace",
+      username: "jammywammy",
+      password: "jnknkb",
+      email: "wr7@gmail.com"
+    },
+    {
+      name: "Qaseem",
+      username: "QB",
+      password: "yessirojnkn",
+      email: "qbarnhardt@gmail.com"
+    },
+    {
+      name: "gian",
+      username: "yc11",
+      password: "queensnny",
+      email: "yc11@gmail.com"
+    },
+    {
+      name: "bettywhite",
+      username: "oldschoollegned",
+      password: "joihkjjnk",
+      email: "bw1885@gmail.com"
+    },
+    {
+      name: "rickowens",
+      username: "terribleclothes",
+      password: "trashclothes",
+      email: "ROtrash@gmail.com"
+    },
+    {
+      name: "maryam",
+      username: "sassybrown",
+      password: "kjjnkbkb",
+      email: "sas5445@gmail.com"
+    },
+
   ];
 
   // const saveTestUser = async () => {

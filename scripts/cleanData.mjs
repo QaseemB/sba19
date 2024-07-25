@@ -66,3 +66,6 @@ const cleanData = async ()=> {
 }
 
 cleanData()
+
+
+// this script idea came from nadir 

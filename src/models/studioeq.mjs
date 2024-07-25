@@ -6,6 +6,7 @@ const studioSchema = new mongoose.Schema({
    model: {
         type: String,
         required: true,
+        unique: true,
     },
     price: {
         type: String,
