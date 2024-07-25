@@ -6,10 +6,8 @@ import { USERS } from "../models/users.mjs";
 
 
 
-const users =  async () => {
-   try{
-    
-    const userdb = [
+const users =  
+    [
 
     {
  
@@ -36,7 +34,7 @@ const users =  async () => {
 
       name: "lamine",
       password: "sunsetdrive69",
-      username: "bestofthebest",
+      username: "bestofthebest359",
       email: "sweet16@gmail.com"
     },
     {
@@ -53,14 +51,42 @@ const users =  async () => {
       email: "cr7@gmail.com"
     }
   ];
-      await USERS.insertMany(userdb);
-      console.log('userdb has been saved')
-     }catch (error){
-    console.error('Error saving users', error)
-  }
-  };
 
-  await users();
+  // const saveTestUser = async () => {
+  //   try {
+  //     const testUser = new USERS({
+  //       name: "mike",
+  //       username: "mjthegoat",
+  //       password: "hellogovenor",
+  //       email: "mjisthegoat@gmail.com"
+  //     });
+  //     await testUser.save();
+  //     console.log('Test user saved successfully');
+  //     // USERS.insert({testUser})
+  //   } catch (error) {
+  //     console.error('Error saving test user:', error);
+  //   }
+  // };
+  
+  // await saveTestUser();  
 
+//   const storingUsers = async () =>{
+//    await USERS.deleteMany({})
+//     .then(()=>{
+//       console.log("users has been cleared")
+//     })
+//     .catch((error)=>{
+//       console.log('error deleting the users')
+//     })
+//   await USERS.insertMany(users)
+//     .then(()=> {
+//      console.log('userdb has been saved')
+//       })
+//     .catch ((error)=>{
+//     console.error('Error saving users', error)
+//   });
+//   }
+  
+// storingUsers();
 
 export {users}

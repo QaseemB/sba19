@@ -1,6 +1,6 @@
 body {
-    background-color: navy;
-    color: white;
+    /* background-color: navy; */
+    color: black;
   }
   
   h1 {
@@ -8,7 +8,7 @@ body {
   }
   
   p {
-    color: lightgray;
+    color: black;
     text-align: center;
     margin: 0 auto;
      max-width: 800px;
