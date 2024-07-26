@@ -1,8 +1,8 @@
-Audio Engineering E-commerce Platform
+Mongodb Project for Per scholas
 
-#Overview
+Overview
 
-This project is an audio engineering e-commerce platform built using Express.js for the backend and Pug templates for the frontend. It allows users to browse and purchase studio equipment and musical instruments.
+This project is to show my ability to intergrate data with mongodb 
 
 Features
 
