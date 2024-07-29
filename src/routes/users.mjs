@@ -72,7 +72,7 @@ router
 
       const data = matchedData(req)
       console.log(data);
-      const newuser = {id: users[users.length -1].name + 1, ...data
+      const newuser = {id: users[users.length -1].id + 1, ...data
       }
       users.push(newuser);
       return res.status(201).send(newuser)
