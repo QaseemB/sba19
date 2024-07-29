@@ -3,6 +3,7 @@ const router = express.Router();
 import { query, validationResult, body, matchedData} from "express-validator";
 import {users} from '../data/users.mjs';
 import {error} from '../utilties/error.mjs'
+import { USERS } from "../models/users.mjs";
 const resolveIndexByUserID = (req,res,next)=>{
   const {
     body,
@@ -62,7 +63,7 @@ router
       .withMessage(`password nedds to be 5-30 characters`),
      
     ],
-    (req,res) =>{
+    async (req,res)=> {
       const result = validationResult(req);
       console.log(result)
       console.log('req body:',req.body)
@@ -70,12 +71,26 @@ router
       if(!result.isEmpty())
         return res.status(400).send({errors: result.array()});
 
-      const data = matchedData(req)
+      const data = matchedData(req);
       console.log(data);
-      const newuser = {id: users[users.length -1].id + 1, ...data
-      }
-      users.push(newuser);
-      return res.status(201).send(newuser)
+
+      let newUser;
+    
+      const saveNewUser = async ()=> {
+        try {const newUser = new USERS ({id: users[users.length -1].id + 1, ...data
+        });
+          await newUser.save();
+          console.log('New user has been saved succefully');
+          USERS.insertMany({newUser});
+        } catch (error){
+          console.log(`error saving new user`, error);
+        }
+        // await users.push(newUser);
+        // return res.status(201).send(newUser)
+      };
+      await saveNewUser ();
+      users.push(newUser);
+      return res.status(201).send(newUser)
     })
     .delete((req, res, next) => {
       const user = users.find((u, i) => {
@@ -106,6 +121,4 @@ router
       users.splice(findUserIndex, 1)
       return res.sendStatus(200)
     })
-
-
 export {router}
