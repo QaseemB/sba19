@@ -118,15 +118,22 @@ router
       .get(resolveIndexByUserID, (req,res) => {
         res.json(req.findUser);
       })
-      .patch(resolveIndexByUserID,(req,res) =>{
-      const { body, findUserIndex } = req;
-      users[findUserIndex] = {...users[findUserIndex], ...body};
-      return res.sendStatus(204)
+      .patch(resolveIndexByUserID, async (req,res) =>{
+      const updates = req.body;
+      try {
+        if (!req.findUser) {
+          return res.status(404).send({ error: 'User not found' });
+      }
+        USERS.updateOne({_id: req.findUser._id},{$set: updates} );
+        await req.findUser.save();
+        const updatedUser = await USERS.findById(req.findUser._id);
+        res.status(200).json(updatedUser);
+      }catch (err) {
+        res.status(500).send({ error: 'Error updating user' });
+      }
     })
     .delete( resolveIndexByUserID, async (req,res,next)=>{
-      // const { body,findUserIndex,findByIdAndDelete } = req;
-      // users[findUserIndex] = {...users[findUserIndex], ...body};
-      // users.splice(findUserIndex, 1)
+    //  deleting a user and checking if the user id is valid 
       try {
         if (!req.findUser) {
           return res.status(404).send({ error: 'User not found' });
