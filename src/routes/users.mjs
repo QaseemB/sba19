@@ -4,18 +4,25 @@ import { query, validationResult, body, matchedData} from "express-validator";
 import {users} from '../data/users.mjs';
 import {error} from '../utilties/error.mjs'
 import { USERS } from "../models/users.mjs";
-const resolveIndexByUserID = (req,res,next)=>{
+import mongoose from "mongoose";
+
+const resolveIndexByUserID = async (req,res,next)=>{
   const {
     body,
     params: {id},
   } = req;
-  const parsedId = parseInt(id);
-  if(isNaN(parsedId)) return res.sendstatus(400);
-  const findUserIndex = users.findIndex((user) => user.id === parsedId);
-  if (findUserIndex === -1) return next(error(404, 'User not found'));
-  req.findUserIndex = findUserIndex;
+  // const parsedId = parseInt(id);
+  if(!mongoose.Types.ObjectId.isValid(id)) 
+    return res.sendstatus(400);
+  try {const findUser = await USERS.findById(id);
+    if (!findUser) return next(error(404, 'User not found'));
+  req.findUser = findUser;
   next()
-}
+  } catch (err){
+    next(error(500, `Internal server error`))
+  }
+
+};
 router
   .route("/")
   .get(query('filter')
@@ -108,20 +115,27 @@ router
     });
     router
       .route("/:id")
-      .get((req,res) => {
-        const user = users.find((u) => u.id == req.params.id);
-        if(user) res.json(user);
-        else(next)
+      .get(resolveIndexByUserID, (req,res) => {
+        res.json(req.findUser);
       })
       .patch(resolveIndexByUserID,(req,res) =>{
       const { body, findUserIndex } = req;
       users[findUserIndex] = {...users[findUserIndex], ...body};
       return res.sendStatus(204)
     })
-    .delete( resolveIndexByUserID,(req,res,next)=>{
-      const { body,findUserIndex } = req;
-      users[findUserIndex] = {...users[findUserIndex], ...body};
-      users.splice(findUserIndex, 1)
-      return res.sendStatus(200)
+    .delete( resolveIndexByUserID, async (req,res,next)=>{
+      // const { body,findUserIndex,findByIdAndDelete } = req;
+      // users[findUserIndex] = {...users[findUserIndex], ...body};
+      // users.splice(findUserIndex, 1)
+      try {
+        if (!req.findUser) {
+          return res.status(404).send({ error: 'User not found' });
+      }
+        await req.findUser.deleteOne({_id: req.findUser._id});
+        res.sendStatus(200);
+      } catch (err) {
+        console.error(`error deleting user:`, err)
+        res.status(500).send({ error: 'Error deleting user' });
+      }
     })
 export {router}
