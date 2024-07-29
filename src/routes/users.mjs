@@ -77,20 +77,23 @@ router
       let newUser;
     
       const saveNewUser = async ()=> {
-        try {const newUser = new USERS ({id: users[users.length -1].id + 1, ...data
+        try {newUser= new USERS ({id: users[users.length -1].id + 1, ...data
         });
           await newUser.save();
           console.log('New user has been saved succefully');
-          USERS.insertMany({newUser});
+          // USERS.insertMany({mongoNewUser});
         } catch (error){
           console.log(`error saving new user`, error);
+          return res.status(500).send({error:'error saving new user'});
         }
         // await users.push(newUser);
-        // return res.status(201).send(newUser)
+        // return res.status(201).send(newUser) 
+        
       };
       await saveNewUser ();
       users.push(newUser);
       return res.status(201).send(newUser)
+     
     })
     .delete((req, res, next) => {
       const user = users.find((u, i) => {
